@@ -1,0 +1,79 @@
+﻿@model GameFestWebApp.Models.TableModel
+
+
+@using (Html.BeginCollectionItem("Tables"))
+{
+    @*@Html.AntiForgeryToken()*@
+
+    <div class="editorRow">
+
+        <div class="form-horizontal">
+            <div class="form-group">
+                @*@Html.ValidationSummary(true, "Required", new { @class = "text-danger" })*@
+
+                @Html.LabelFor(model => model.Name, "Name/Location", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control col-md-2" } })
+                @*@Html.ValidationMessageFor(model => model.Name, "Required", new { @class = "text-danger" })*@
+
+                @Html.LabelFor(model => model.Size, "Size", htmlAttributes: new { @class = "control-label col-md-1" })
+                @Html.EditorFor(model => model.Size, new { htmlAttributes = new { @class = "form-control col-md-1" } })
+                @*@Html.ValidationMessageFor(model => model.Size, "Required", new { @class = "text-danger" })*@
+
+                @Html.LabelFor(model => model.IsKidTable, "Kids Table", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="checkbox-inline">
+                    @Html.CheckBoxFor(model => model.IsKidTable)
+
+                </div>
+                <span>
+                    <span class="dltBtn checkbox-inline">
+                        <a href="#" class="deleteRow">X</a>
+                    </span>
+                </span>
+            </div>
+        </div>
+
+        @*<div class="ui-block-a">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, "Name/Location", new { htmlAttributes = new { @class = "form-control col-md-2" } })
+                    @Html.ValidationMessageFor(model => model.Name, "Required", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="ui-block-b">
+                @Html.LabelFor(model => model.Size, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Size, "Size", new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Size, "Required", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="ui-block-c">
+                @Html.LabelFor(model => model.IsKidTable, "Kids Table", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.IsKidTable)
+                        @Html.ValidationMessageFor(model => model.IsKidTable, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="ui-block-d">
+                <span>
+                    <span class="dltBtn">
+                        <a href="#" class="deleteRow">X</a>
+                    </span>
+                </span>
+            </div>*@
+
+        @*<div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>*@
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

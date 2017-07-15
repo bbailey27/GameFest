@@ -1,0 +1,92 @@
+﻿@model GameFestWebApp.Models.InputModel
+
+@{
+    ViewBag.Title = "AssignTables";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Input</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Input GameFest Details</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.NumRounds, "Number of Rounds", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NumRounds, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NumRounds, "Must be a number", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NumPlayers, "Total Number of Players", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NumPlayers, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NumPlayers, "Must be a number", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ChildCount, "Number of Children (assigned to designated kids tables)", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ChildCount, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ChildCount, "Must be a number", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div id="tableEdit">
+            <h4>Table Details</h4>
+            <hr />
+            @*@for (int i=0; i < Model.Tables.Count(); i++)*@
+            @foreach (var table in Model.Tables)
+            {
+                @Html.Partial("TableView", table);
+                @*@Html.EditorFor(model => Model.Tables[i]);*@
+            }
+        </div>
+        @*@Html.ActionLink("Add Table", "AddTable", null, new { id = "addTable", @class = "button" })*@
+        <button id="addTable">Add Table</button>
+        @*@Ajax.ActionLink("Add Rable", "AddTable", "HomeController", new AjaxOptions { InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = "#tableEdit" })*@
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Organize" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(function () {
+            @*$('#addTable').on('click', function () {
+                $.ajax({
+                    url: '@Url.Action("AddTable")',
+                    cache: false,
+                    success: function (html) { $("#tableEdit").append(html); }
+                });
+                return false;
+            });*@
+            $("#addTable").on("click", function () {
+                event.preventDefault();
+                $.ajax({
+                    url: '@Url.Action("AddTable", Model)',
+                    success: function (partialView) {
+                        $('#tableEdit').append(partialView);
+                    }
+                })
+            });
+            $('#tableEdit').on('click', '.deleteRow', function () {
+                $(this).closest('.editorRow').remove();
+            });
+        });
+    </script>
+}
